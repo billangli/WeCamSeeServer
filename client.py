@@ -7,6 +7,17 @@ Aug. 26th, 2017
 
 import socket
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(('localhost', 7878))
-client_socket.send('hello'.encode())
+
+class Client:
+    def __init__(self, host, port):
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client_socket.connect((host, port))
+
+        print("Running Client")
+        self.run()
+
+    def run(self):
+        while True:
+            data_encoded = self.client_socket.recv(128)
+            data = data_encoded.decode()
+            print(data)
